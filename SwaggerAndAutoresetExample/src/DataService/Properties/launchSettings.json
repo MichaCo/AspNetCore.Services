@@ -3,14 +3,14 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:23815/",
+      "applicationUrl": "http://127.0.0.1:5500/",
       "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -18,12 +18,12 @@
     },
     "DataService": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:23816"
+      "applicationUrl": "http://127.0.0.1:5200"
     }
   }
 }
