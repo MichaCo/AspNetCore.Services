@@ -5,20 +5,36 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataService.Controllers
 {
+    public class ValueModel
+    {
+        internal static ValueModel Create(int id)
+        {
+            return new ValueModel()
+            {
+                Id = id,
+                Value = $"Value {id}",
+                LastModified = DateTime.UtcNow
+            };
+        }
+
+        public int Id { get; set; }
+
+        public string Value { get; set; }
+
+        public DateTime LastModified { get; set; }
+    }
+
     [Route("[controller]")]
     public class ValuesController : Controller
     {
-        private static Random Rnd = new Random();
-
-        private static readonly Dictionary<string, string> _values = new Dictionary<string, string>()
+        private static object valueLock = new object();
+        private static readonly List<ValueModel> _values = new List<ValueModel>()
         {
-            {  "a", "Value " + Rnd.Next(10, 1000) },
-            {  "b", "Value " + Rnd.Next(10, 1000) },
-            {  "c", "Value " + Rnd.Next(10, 1000) },
-            {  "d", "Value " + Rnd.Next(10, 1000)},
-            {  "e", "Value " + Rnd.Next(10, 1000) },
-            {  "f", "Value " + Rnd.Next(10, 1000) },
-            {  "g", "Value " + Rnd.Next(10, 1000) },
+            ValueModel.Create(22),
+            ValueModel.Create(23),
+            ValueModel.Create(55),
+            ValueModel.Create(112),
+            ValueModel.Create(576),
         };
 
         [HttpGet("")]
@@ -28,62 +44,59 @@ namespace DataService.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public IActionResult Get(int id)
         {
-            if (_values.TryGetValue(id, out string value))
+            var value = _values.FirstOrDefault(p => p.Id == id);
+            if (value == null)
             {
-                return Json(value);
+                return NotFound();
             }
 
-            return NotFound();
+            return Json(value);
         }
 
-        [HttpPost("{id}")]
-        public bool Post(string id, [FromBody]string value)
+        [HttpPost("")]
+        public void Post([FromBody]string value)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            lock (valueLock)
             {
-                throw new ArgumentNullException(nameof(id));
+                var id = _values.Max(p => p.Id) + 1;
+
+                _values.Add(new ValueModel()
+                {
+                    Id = id,
+                    Value = value,
+                    LastModified = DateTime.UtcNow
+                });
             }
-
-            if (_values.ContainsKey(id))
-            {
-                return false;
-            }
-
-            _values.Add(id, value);
-
-            return true;
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]string value)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            var existing = _values.FirstOrDefault(p => p.Id == id);
+            if (existing == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                return NotFound();
             }
 
-            if (_values.ContainsKey(id))
-            {
-                _values[id] = value;
-                return Ok();
-            }
+            existing.LastModified = DateTime.UtcNow;
+            existing.Value = value;
 
-            return NotFound();
+            return Ok(existing);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            var existing = _values.FirstOrDefault(p => p.Id == id);
+            if (existing == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                return NotFound();
             }
 
-            if (_values.ContainsKey(id))
+            if (_values.Remove(existing))
             {
-                _values.Remove(id);
                 return Ok();
             }
 

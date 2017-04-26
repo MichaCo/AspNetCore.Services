@@ -1,0 +1,10 @@
+{
+  "name": "website",
+  "description": "Used for generation of AutoRest client only",
+  "scripts": {
+    "generate": "autorest -n ConsumingWebsite.DataServiceClient -i http://localhost:5200/swagger/v1/swagger.json -o DataServiceClient"
+  },
+  "devDependencies": {
+    "autorest": "^0.13.1"
+  }
+}
