@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model Website.Controllers.IndexViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Dns Query Result:</h1>
+    </div>
+</div>
+
+
+@foreach (var entry in Model.DnsResult)
+{
+<div class="row">
+    <div class="col-md-12">
+        Address: @entry.AddressList.FirstOrDefault()?.ToString()
+        <br />
+        Port: @entry.Port
+    </div>
+</div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Service Call Result:</h1>
+        <blockquote>
+            <code>
+                @Model.ServiceResult
+            </code>
+        </blockquote>
+    </div>
+</div>
