@@ -17,6 +17,7 @@ namespace DataService
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseConfiguration(configuration)
+                .UseIISIntegration()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using Consul;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
@@ -17,8 +15,9 @@ namespace DataService
                 .Build();
 
             var host = new WebHostBuilder()
-                .UseKestrel()       
+                .UseKestrel()
                 .UseConfiguration(configuration)
+                .UseIISIntegration()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
                 .Build();

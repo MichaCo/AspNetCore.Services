@@ -1,21 +1,38 @@
-﻿@{
-    ViewData["Title"] = "List of Values From Data Service";
+﻿@using ConsumingWebsite.Clients.DataService.Models
+@using System.Collections.Generic
+@{
+    ViewData["Title"] = "List of Posts from Data Service";
 }
+@model IList<BlogPostModel>
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>Data Service</h2>
-            <p>
-                Go to <a href="http://localhost:5200/swagger">Data Service Swagger UI</a>, to inspect the swagger definition.
-                (Start the DataService if the site is not available and you do not see any results down below)
-            </p>
+            <h1>Blog Posts</h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h2>List of values</h2>
+    @foreach (var postGroup in Model.OrderByDescending(p=>p.Published).GroupBy(p => p.Published?.ToString("yyyy/MM")))
+    {
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <h3>Published @postGroup.Key</h3>
+            </div>
+        </div>
+        @foreach (var post in postGroup)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@post.Title <span class="pull-right"></span></h2>
+                    <p>
+                        @foreach (var tag in post.Tags)
+                        {
+                            <span class="badge">@tag</span>
+                        }
+                    </p>
 
-        </div>        
-    </div>
+                    @Html.Raw(post.Content)
+                </div>        
+            </div>
+            }
+        }
 </div>

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
+using ConsumingWebsite.Clients.DataService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +29,12 @@ namespace ConsumingWebsite
         {
             // Add framework services.
             services.AddMvc();
+
+            var handler = new HttpClientHandler();
+            services.AddScoped<IDataService>(p =>
+            {
+                return new DataService(new Uri(Configuration.GetValue<string>("DataService")), handler);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

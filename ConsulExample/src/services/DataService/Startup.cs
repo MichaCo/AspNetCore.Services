@@ -30,7 +30,7 @@ namespace DataService
             services.AddMvc();
             services.AddSwaggerGen(opt =>
             {
-                opt.SwaggerDoc("v1", new Info() { Title = "DataService", Version = "v1" });
+                opt.SwaggerDoc("doc", new Info() { Title = "DataService" });
             });
 
             services.AddServiceDiscovery(Configuration.GetSection("ServiceDiscovery"));
@@ -47,7 +47,7 @@ namespace DataService
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DataService API V1");
+                c.SwaggerEndpoint("/swagger/doc/swagger.json", "DataService API");
             });
 
             app.UseMvc();
