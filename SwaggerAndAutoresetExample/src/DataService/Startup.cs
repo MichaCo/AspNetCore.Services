@@ -30,7 +30,7 @@ namespace DataService
             services.AddMvc();
             services.AddSwaggerGen(opt =>
             {
-                opt.SwaggerDoc("doc", new Info() { Title = "DataService" , Version = "v1"});
+                opt.SwaggerDoc("doc", new Info() { Title = "DataService" });
             });
         }
 
