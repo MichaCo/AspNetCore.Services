@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
+using Clients;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
 
-namespace DataService
+namespace ConsumingWebsite
 {
     public class Startup
     {
@@ -17,7 +19,6 @@ namespace DataService
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-
             Configuration = builder.Build();
         }
 
@@ -28,32 +29,37 @@ namespace DataService
         {
             // Add framework services.
             services.AddMvc();
-            services.AddSwaggerGen(opt =>
+
+            var handler = new HttpClientHandler();
+            services.AddScoped<IDataServiceClient>(p =>
             {
-                opt.SwaggerDoc("doc", new Info() { Title = "DataService" , Version = "v1"});
+                return new DataServiceClient(new HttpClient(handler)) { BaseUrl = Configuration.GetValue<string>("DataService") };
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(
-            IApplicationBuilder app,
-            ILoggerFactory loggerFactory,
-            IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseSwagger();
-
             if (env.IsDevelopment())
             {
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/doc/swagger.json", "DataService API");
-                });
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseMvc();
+            app.UseStaticFiles();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

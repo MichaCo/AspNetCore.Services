@@ -1,0 +1,38 @@
+﻿@using Clients
+@using System.Collections.Generic
+@{
+    ViewData["Title"] = "List of Posts from Data Service";
+}
+@model IList<BlogPostModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Blog Posts</h1>
+        </div>
+    </div>
+    @foreach (var postGroup in Model.OrderByDescending(p=>p.Published).GroupBy(p => p.Published.ToString("yyyy/MM")))
+    {
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <h3>Published @postGroup.Key</h3>
+            </div>
+        </div>
+        @foreach (var post in postGroup)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@post.Title <span class="pull-right"></span></h2>
+                    <p>
+                        @foreach (var tag in post.Tags)
+                        {
+                            <span class="badge">@tag</span>
+                        }
+                    </p>
+
+                    @Html.Raw(post.Content)
+                </div>        
+            </div>
+            }
+        }
+</div>

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
+using NJsonSchema;
+using NSwag.AspNetCore;
 
 namespace DataService
 {
@@ -28,10 +30,11 @@ namespace DataService
         {
             // Add framework services.
             services.AddMvc();
-            services.AddSwaggerGen(opt =>
-            {
-                opt.SwaggerDoc("doc", new Info() { Title = "DataService" , Version = "v1"});
-            });
+            
+            //services.AddSwaggerGen(opt =>
+            //{
+            //    opt.SwaggerDoc("doc", new Info() { Title = "DataService" });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,15 +46,26 @@ namespace DataService
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseSwagger();
-
-            if (env.IsDevelopment())
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings
             {
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/doc/swagger.json", "DataService API");
-                });
-            }
+                DefaultPropertyNameHandling = PropertyNameHandling.CamelCase,
+                Description = "DataService API",
+                SwaggerRoute = "/swagger",
+                SwaggerUiRoute = "/swagger/ui",
+                Title = "DataService API",
+                Version = ""
+            });
+
+
+            //app.UseSwagger();
+
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseSwaggerUI(c =>
+            //    {
+            //        c.SwaggerEndpoint("/swagger/doc/swagger.json", "DataService API");
+            //    });
+            //}
 
             app.UseMvc();
         }

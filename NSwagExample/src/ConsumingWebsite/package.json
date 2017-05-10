@@ -1,0 +1,10 @@
+{
+  "name": "website",
+  "description": "Used for generation of AutoRest client only",
+  "scripts": {
+    "generate": "nswag swagger2csclient /input:http://localhost:5200/swagger /namespace:Clients /output:Clients\\DataServiceClient.cs  /GenerateClientInterfaces:true /GenerateDtoTypes:true /InjectHttpClient:true /ClassName:DataServiceClient"
+  },
+  "devDependencies": {
+    "nswag": "10.6.0"
+  }
+}
