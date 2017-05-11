@@ -12,8 +12,13 @@ namespace DataService.Controllers
         {
         }
 
+        /// <summary>
+        /// Simple health check http endpoint.
+        /// </summary>
+        /// <returns>A string indicating the service is available.</returns>
         [HttpGet("")]
         [SwaggerOperation(operationId: "getHealthCheck")]
+        [ProducesResponseType(typeof(string), 200)]
         public IActionResult Ping()
         {
             return Ok("I'm fine");

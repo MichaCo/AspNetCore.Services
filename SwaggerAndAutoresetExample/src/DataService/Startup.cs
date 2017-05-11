@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +33,9 @@ namespace DataService
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc("doc", new Info() { Title = "DataService" });
+
+                var fileName = this.GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml");
+                opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
             });
         }
 
