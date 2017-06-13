@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataService", "SwaggerAndAutoresetExample\src\DataService\DataService.csproj", "{3837CF56-8835-425C-AF49-12DCCD7E029C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataService", "SwaggerAndAutorestExample\src\DataService\DataService.csproj", "{3837CF56-8835-425C-AF49-12DCCD7E029C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsumingWebsite", "SwaggerAndAutoresetExample\src\ConsumingWebsite\ConsumingWebsite.csproj", "{D91C50A7-11FD-4BEB-B135-A0A301AEBFC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsumingWebsite", "SwaggerAndAutorestExample\src\ConsumingWebsite\ConsumingWebsite.csproj", "{D91C50A7-11FD-4BEB-B135-A0A301AEBFC9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1F82B8CE-2535-44A1-AE8A-B34D074E5978}"
 	ProjectSection(SolutionItems) = preProject
-		SwaggerAndAutoresetExample\readme.md = SwaggerAndAutoresetExample\readme.md
+		SwaggerAndAutorestExample\readme.md = SwaggerAndAutorestExample\readme.md
 	EndProjectSection
 EndProject
 Global
