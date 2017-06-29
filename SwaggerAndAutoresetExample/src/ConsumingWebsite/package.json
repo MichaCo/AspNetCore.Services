@@ -5,6 +5,6 @@
     "generate": "autorest -n ConsumingWebsite.Clients.DataService -i http://localhost:5200/swagger/doc/swagger.json -o Clients.DataService"
   },
   "devDependencies": {
-    "autorest": "^0.13.2"
+    "autorest": "^1.1.0"
   }
 }

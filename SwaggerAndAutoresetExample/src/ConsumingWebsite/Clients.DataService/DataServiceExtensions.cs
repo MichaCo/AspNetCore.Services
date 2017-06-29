@@ -16,25 +16,37 @@ namespace ConsumingWebsite.Clients.DataService
     /// </summary>
     public static partial class DataServiceExtensions
     {
+            /// <summary>
+            /// Simple health check http endpoint.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void GetHealthCheck(this IDataService operations)
+            public static string GetHealthCheck(this IDataService operations)
             {
-                operations.GetHealthCheckAsync().GetAwaiter().GetResult();
+                return operations.GetHealthCheckAsync().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Simple health check http endpoint.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetHealthCheckAsync(this IDataService operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> GetHealthCheckAsync(this IDataService operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.GetHealthCheckWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.GetHealthCheckWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
+            /// <summary>
+            /// Gets all blog posts.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -43,6 +55,9 @@ namespace ConsumingWebsite.Clients.DataService
                 return operations.GetBlogPostsAsync().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets all blog posts.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -57,20 +72,36 @@ namespace ConsumingWebsite.Clients.DataService
                 }
             }
 
+            /// <summary>
+            /// Gets a blog post by identifier.
+            /// </summary>
+            /// <remarks>
+            /// As {404} is a valid response code, clients should return {null} for those
+            /// responses instead of throwing an exception.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='id'>
+            /// The identifier.
             /// </param>
             public static BlogPostModel GetBlogPostById(this IDataService operations, string id)
             {
                 return operations.GetBlogPostByIdAsync(id).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets a blog post by identifier.
+            /// </summary>
+            /// <remarks>
+            /// As {404} is a valid response code, clients should return {null} for those
+            /// responses instead of throwing an exception.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='id'>
+            /// The identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -83,20 +114,28 @@ namespace ConsumingWebsite.Clients.DataService
                 }
             }
 
+            /// <summary>
+            /// Gets all blog posts filtered by tag.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='tag'>
+            /// The tag to filter.
             /// </param>
             public static IList<BlogPostModel> GetBlogPostsByTag(this IDataService operations, string tag)
             {
                 return operations.GetBlogPostsByTagAsync(tag).GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Gets all blog posts filtered by tag.
+            /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='tag'>
+            /// The tag to filter.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -33,14 +33,20 @@ namespace ConsumingWebsite.Clients.DataService
         JsonSerializerSettings DeserializationSettings { get; }
 
 
+        /// <summary>
+        /// Simple health check http endpoint.
+        /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> GetHealthCheckWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<string>> GetHealthCheckWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Gets all blog posts.
+        /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -49,7 +55,15 @@ namespace ConsumingWebsite.Clients.DataService
         /// </param>
         Task<HttpOperationResponse<IList<BlogPostModel>>> GetBlogPostsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Gets a blog post by identifier.
+        /// </summary>
+        /// <remarks>
+        /// As {404} is a valid response code, clients should return {null} for
+        /// those responses instead of throwing an exception.
+        /// </remarks>
         /// <param name='id'>
+        /// The identifier.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -59,7 +73,11 @@ namespace ConsumingWebsite.Clients.DataService
         /// </param>
         Task<HttpOperationResponse<BlogPostModel>> GetBlogPostByIdWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Gets all blog posts filtered by tag.
+        /// </summary>
         /// <param name='tag'>
+        /// The tag to filter.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

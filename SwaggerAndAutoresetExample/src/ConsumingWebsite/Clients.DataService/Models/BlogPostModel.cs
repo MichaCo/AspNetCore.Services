@@ -6,11 +6,15 @@ namespace ConsumingWebsite.Clients.DataService.Models
 {
     using ConsumingWebsite.Clients;
     using ConsumingWebsite.Clients.DataService;
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The model representing a blog post's meta data.
+    /// </summary>
     public partial class BlogPostModel
     {
         /// <summary>
@@ -24,7 +28,14 @@ namespace ConsumingWebsite.Clients.DataService.Models
         /// <summary>
         /// Initializes a new instance of the BlogPostModel class.
         /// </summary>
-        public BlogPostModel(string id = default(string), string title = default(string), string content = default(string), string author = default(string), System.DateTime? published = default(System.DateTime?), System.DateTime? modified = default(System.DateTime?), IList<string> tags = default(IList<string>))
+        /// <param name="id">Gets or sets the identifier.</param>
+        /// <param name="title">Gets or sets the title.</param>
+        /// <param name="content">Gets or sets the content.</param>
+        /// <param name="published">Gets or sets the published.</param>
+        /// <param name="author">Gets or sets the author.</param>
+        /// <param name="modified">Gets or sets the modified.</param>
+        /// <param name="tags">Gets or sets the tags.</param>
+        public BlogPostModel(string id, string title, string content, System.DateTime published, string author = default(string), System.DateTime? modified = default(System.DateTime?), IList<string> tags = default(IList<string>))
         {
             Id = id;
             Title = title;
@@ -42,39 +53,67 @@ namespace ConsumingWebsite.Clients.DataService.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the title.
         /// </summary>
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the content.
         /// </summary>
         [JsonProperty(PropertyName = "content")]
         public string Content { get; set; }
 
         /// <summary>
+        /// Gets or sets the author.
         /// </summary>
         [JsonProperty(PropertyName = "author")]
         public string Author { get; set; }
 
         /// <summary>
+        /// Gets or sets the published.
         /// </summary>
         [JsonProperty(PropertyName = "published")]
-        public System.DateTime? Published { get; set; }
+        public System.DateTime Published { get; set; }
 
         /// <summary>
+        /// Gets or sets the modified.
         /// </summary>
         [JsonProperty(PropertyName = "modified")]
         public System.DateTime? Modified { get; set; }
 
         /// <summary>
+        /// Gets or sets the tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<string> Tags { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (Title == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Title");
+            }
+            if (Content == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Content");
+            }
+        }
     }
 }
