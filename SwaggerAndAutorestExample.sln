@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataService", "SwaggerAndAutorestExample\src\DataService\DataService.csproj", "{3837CF56-8835-425C-AF49-12DCCD7E029C}"
 EndProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		SwaggerAndAutorestExample\readme.md = SwaggerAndAutorestExample\readme.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataService.Shared", "SwaggerAndAutorestExample\src\DataService.Shared\DataService.Shared.csproj", "{0CF1A086-69A6-4CEE-962D-EA1C10EB3A46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{D91C50A7-11FD-4BEB-B135-A0A301AEBFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D91C50A7-11FD-4BEB-B135-A0A301AEBFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D91C50A7-11FD-4BEB-B135-A0A301AEBFC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF1A086-69A6-4CEE-962D-EA1C10EB3A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF1A086-69A6-4CEE-962D-EA1C10EB3A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF1A086-69A6-4CEE-962D-EA1C10EB3A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF1A086-69A6-4CEE-962D-EA1C10EB3A46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

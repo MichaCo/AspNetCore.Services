@@ -36,6 +36,9 @@ namespace DataService
 
                 var fileName = this.GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml");
                 opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
+
+                var modelFileName = typeof(Shared.BlogPostModel).GetTypeInfo().Module.Name.Replace(".dll", ".xml");
+                opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, modelFileName));
             });
         }
 
