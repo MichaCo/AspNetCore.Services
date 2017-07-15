@@ -6,8 +6,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataService
 {
+    /// <summary>
+    /// Service console app
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Service main entry
+        /// </summary>
+        /// <param name="args">The command line arguments.</param>
         public static void Main(string[] args)
         {
             var configuration = new ConfigurationBuilder()

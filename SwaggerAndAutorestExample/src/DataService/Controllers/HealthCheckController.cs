@@ -5,13 +5,12 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DataService.Controllers
 {
+    /// <summary>
+    /// A basic health check service
+    /// </summary>
     [Route("[Controller]")]
     public class HealthCheckController : Controller
     {
-        public HealthCheckController()
-        {
-        }
-
         /// <summary>
         /// Simple health check http endpoint.
         /// </summary>

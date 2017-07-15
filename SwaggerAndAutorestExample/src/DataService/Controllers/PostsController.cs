@@ -9,6 +9,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace DataService.Controllers
 {
+    /// <summary>
+    /// The blog post service.
+    /// </summary>
     [Route("[controller]")]
     public class PostsController : Controller
     {

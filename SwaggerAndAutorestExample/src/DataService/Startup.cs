@@ -10,8 +10,15 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace DataService
 {
+    /// <summary>
+    /// The service startup.
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// The startup gets the <see cref="IHostingEnvironment"/> injected.
+        /// </summary>
+        /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -23,9 +30,15 @@ namespace DataService
             Configuration = builder.Build();
         }
 
+        /// <summary>
+        /// Keeps the appsettings configuration for later use.
+        /// </summary>
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">The services collection.</param>
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
@@ -34,7 +47,7 @@ namespace DataService
             {
                 opt.SwaggerDoc("doc", new Info() { Title = "DataService" });
 
-                var fileName = this.GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml");
+                var fileName = this.GetType().GetTypeInfo().Module.Name.Replace(".dll", ".xml").Replace(".exe", ".xml");
                 opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, fileName));
 
                 var modelFileName = typeof(Shared.BlogPostModel).GetTypeInfo().Module.Name.Replace(".dll", ".xml");
@@ -42,19 +55,23 @@ namespace DataService
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">The app builder.</param>
+        /// <param name="loggerFactory">Our logger factory.</param>
+        /// <param name="env">The <see cref="IHostingEnvironment"/>.</param>
         public void Configure(
             IApplicationBuilder app,
             ILoggerFactory loggerFactory,
             IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             app.UseSwagger();
 
             if (env.IsDevelopment())
             {
+                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+                loggerFactory.AddDebug();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/doc/swagger.json", "DataService API");
